@@ -10,12 +10,17 @@ public class Main {
 
 //---------------------------------------Перший конструктор------------------------------
         MyList testlist = new MyList();
+
         testlist.add(new MusicComposition(250, "Alex",
                 "Byb", 54));
-        testlist.add(new MusicComposition(253, "alex",
+
+        testlist.add(new MusicComposition(
+                253, "calex",
                 "Byb", 54));
-        testlist.add(new MusicComposition(281, "lola",
+        testlist.add(100,new MusicComposition(281, "blola",
                 "Byb", 54));
+        testlist.get(100);
+
         System.out.println(testlist.size());
         MyList mylist = new MyList();
         mylist.add(0, new MusicComposition(250, "Alex",

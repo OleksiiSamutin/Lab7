@@ -94,8 +94,15 @@ public class MyList implements List<MusicComposition> {
 
     @Override
     public Object[] toArray() {
-        MusicComposition arr[] = new MusicComposition[size];
-        return arr;
+        int pointer = 0;
+        for (int i = 0; i <elements.length; i++) {
+            if (elements[i]!=null){
+                pointer++;
+            }
+        }
+        MusicComposition[] array = new MusicComposition[pointer];
+        System.arraycopy(elements, 0, array, 0, array.length);
+        return array;
     }
 
     @Override
@@ -181,31 +188,7 @@ public class MyList implements List<MusicComposition> {
         }
         size=c.size();
         elements= c.toArray(new MusicComposition[size]);
-        /*int counter = 0;
-        int[] temp = new int[c.size()];
-        while (iterator.hasNext()) {
-            for (int i = 0; i < temp.length; i++) {
-                if (this.contains(iterator.next())) {
-                    temp[i] = 1;
-                } else {
-                    temp[i] = 0;
-                }
-            }
-        }
-        Iterator<?> secondIterator = c.iterator();
-        size = c.size();
-        elements = new MusicComposition[size];
-        while (secondIterator.hasNext()) {
-            for (int i = 0; i < temp.length; i++) {
-                if (temp[i] == 1) {
 
-                    elements[counter++] = ((MusicComposition) secondIterator.next());
-                } else {
-                    secondIterator.next();
-                }
-            }
-        }
-        size = counter;*/
         return true;
     }
 
@@ -218,6 +201,18 @@ public class MyList implements List<MusicComposition> {
 
     @Override
     public MusicComposition get(int index) {
+       try {
+           if (index > size) {
+               throw new IndexOutOfRange();
+           }
+       }catch (ClassCastException e) {
+           System.out.println("Неправильний тип параметру");
+       }
+
+       catch(IndexOutOfRange e){
+           e.printStackTrace();
+
+       }
         return elements[index];
     }
 
@@ -230,18 +225,24 @@ public class MyList implements List<MusicComposition> {
 
     @Override
     public void add(int index, MusicComposition element) {
-        MusicComposition temp = elements[index];
+        try {
+            MusicComposition temp = elements[index];
 
-        if (!((index < elements.length) && (size + 1 < elements.length))) {
-            this.increaseSize();
-        }
-        for (int i = size; i > index; i--) {
-            elements[i + 1] = elements[i];
-        }
-        elements[index + 1] = temp;
-        elements[index] = element;
 
-        size++;
+            if (!((index < elements.length) && (size + 1 < elements.length))) {
+                this.increaseSize();
+            }
+            for (int i = size; i > index; i--) {
+                elements[i + 1] = elements[i];
+            }
+            elements[index + 1] = temp;
+            elements[index] = element;
+
+            size++;
+        }
+        catch (java.lang.ArrayIndexOutOfBoundsException z){
+            System.out.println("your index is out of bound!");
+        }
 
     }
 
@@ -408,6 +409,7 @@ public class MyList implements List<MusicComposition> {
 
     @Override
     public void sort(Comparator<? super MusicComposition> c) {
+
         Arrays.sort(elements, c);
     }
 
